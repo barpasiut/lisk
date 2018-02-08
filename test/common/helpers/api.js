@@ -117,6 +117,10 @@ function httpResponseCallbackHelper(cb, err, res) {
 	cb(null, res);
 }
 
+function getNotFoundEndpoint(randomEndpoint, cb) {
+	http.get(`/api/${randomEndpoint}`, httpResponseCallbackHelper.bind(null, cb));
+}
+
 function getTransactionById(transactionId, cb) {
 	// Get transactionById uses the same /api/transactions endpoint, this is just a helper function
 	http.get(
@@ -382,6 +386,7 @@ var getForgedByAccountPromise = Promise.promisify(getForgedByAccount);
 var getForgersPromise = Promise.promisify(getForgers);
 var getAccountsPromise = Promise.promisify(getAccounts);
 var getBlocksPromise = Promise.promisify(getBlocks);
+var getNotFoundEndpointPromise = Promise.promisify(getNotFoundEndpoint);
 
 module.exports = {
 	getTransactionByIdPromise,
@@ -418,4 +423,5 @@ module.exports = {
 	expectSwaggerParamError,
 	createSignatureObject,
 	normalizeTransactionObject,
+	getNotFoundEndpointPromise,
 };
